@@ -2,63 +2,63 @@
 //import { Signin } from "@/actions"
 import { Input } from "@/components/ui/input"
 import useAuthStore from "@/store/auth" 
+import {User} from "@/store/auth"
 import { useForm, SubmitHandler } from "react-hook-form"
 //import { Login } from '@/components/authen/login';
 import { Separator } from "@/components/ui/separator"
+import { useRouter } from 'next/router';
+//import Router from 'next/router'
+//import { useEffect } from "react"
 
-type User = {
-  username:string
-  password:string
-}
+
 
  
 
 
-export const Signin = async (body:User) =>{
-   
-  try {
-     const state = useAuthStore()
 
-      const response = await fetch("http://167.71.100.123:3003/api/v1/users/login", { method: 'POST',
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          //'Authorization': 'Bearer ' +  token
-          },
-          body: JSON.stringify({"username":body.username,password:body.password,"prefix":"psc"})
-        })
-      const data = await response.json()
-      //set({ isLoggedIn: true });
-      //set({ products: data.products, isLoading: false })
-      //const userLocalStorage = localStorage.getItem('accessToken');
-      //if (userLocalStorage) {
-      // console.log(data)
-      if (data.status){
-       //  set({ isLoggedIn: true });
-       //  state.setAccessToken(data.token)
-         state.isLoggedIn = data.status
-      } else {
-
-      }
-  }
-  catch (err:unknown) {
-      console.error(err);
-  }
-}
 
 
 export default function Login() {
-
+ 
   const {
     register,
     handleSubmit
   } = useForm<User>()
-
+ 
+  const { Signin, isLoggedIn } = useAuthStore();
   //const {login} = useAuthStore()
-  const onSubmit: SubmitHandler<User> = (data:User) => {
-     Signin(data)
-    console.log(data)
-  //console.log('logged in')
+ // const router = useRouter();
+
+  // useEffect(() => {
+  //   // ตรวจสอบสถานะการล็อกอินเพื่อ redirect
+  //   if (state.isLoggedIn) {
+  //     router.push('/dashboard');
+  //   }
+  // }, [state.isLoggedIn]); // ทำงานเมื่อ isLoggedIn เปลี่ยนแปลง
+
+
+  const onSubmit: SubmitHandler<User> = async (data:User) => {
+    await Signin(data); // เรียกใช้ฟังก์ชัน Signin ใน authStore
+    location.replace("/")
+    // if (isLoggedIn) {
+    //   router.push('/dashboard'); // redirect หลัง login สำเร็จ
+    // }
+    //  login(data).then((response)=>{
+    
+    //   if(response.Status){
+    //     document.cookie = "isLoggedIn=true; path=/"; // อัพเดต cookie
+    //     state.accessToken = response.token
+    //     //navigate("dashboard")
+    //    // router.push('/dashboard');
+      
+    //   }else {
+    //     state.isLoggedIn = false
+    //     document.cookie = "isLoggedIn=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; // ลบ cookie
+
+    //     }
+
+    //  })
+       //console.log('logged in')
   //  login(data)
  
   }
