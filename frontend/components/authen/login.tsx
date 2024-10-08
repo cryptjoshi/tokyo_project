@@ -18,7 +18,7 @@ export const Signin = async (body:User) =>{
   try {
      // const state = useAuthStore()
 
-      const response = await fetch("https://backend.paribrand.shop/api/v1/users/login", { method: 'POST',
+      const response = await fetch("http://167.71.100.123:3003/api/v1/users/login", { method: 'POST',
           headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
