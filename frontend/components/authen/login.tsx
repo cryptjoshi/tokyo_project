@@ -1,25 +1,61 @@
 'use client'
+//import { Signin } from "@/actions"
 import { Input } from "@/components/ui/input"
-import useAuthStore from "@/store/auth" 
+//import useAuthStore from "@/store/auth" 
 import { useForm, SubmitHandler } from "react-hook-form"
+//import { Login } from '@/components/authen/login';
 
 type User = {
-  email:string
+  username:string
   password:string
 }
 
-export default function Component() {
+ 
+
+
+export const Signin = async (body:User) =>{
+   
+  try {
+     // const state = useAuthStore()
+
+      const response = await fetch("https://backend.paribrand.shop/api/v1/users/login", { method: 'POST',
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          //'Authorization': 'Bearer ' +  token
+          },
+          body: JSON.stringify({"username":body.username,password:body.password})
+        })
+      const data = await response.json()
+      //set({ isLoggedIn: true });
+      //set({ products: data.products, isLoading: false })
+      //const userLocalStorage = localStorage.getItem('accessToken');
+      //if (userLocalStorage) {
+      if (data.status){
+         // set({ isLoggedIn: true });
+       //  state.setAccessToken(data.token)
+       //  state.isLoggedIn = data.status
+      }
+  }
+  catch (err:unknown) {
+      console.error(err);
+  }
+}
+
+
+export default function Login() {
 
   const {
     register,
     handleSubmit
   } = useForm<User>()
 
-  const {login,logout} = useAuthStore()
+  //const {login} = useAuthStore()
   const onSubmit: SubmitHandler<User> = (data:User) => {
-  
-  console.log('logged in')
-  login()
+     Signin(data)
+    console.log(data)
+  //console.log('logged in')
+  //  login(data)
  
   }
 
@@ -38,16 +74,16 @@ export default function Component() {
         </div>
         <div className="px-6 py-4">
             <div className="mt-4">
-              <label className="block text-gray-700" htmlFor="email">
-                Email
+              <label className="block text-gray-700" htmlFor="username">
+                Username
               </label>
               <Input
-                type="email"
-                id="email"
+                type="text"
+                id="username"
                 className="mt-2 rounded w-full px-3 py-2 text-gray-700 bg-gray-200 outline-none focus:bg-gray-300"
-                placeholder="m@example.com"
+                placeholder=""
                 required
-                defaultValue="m@example.com"  {...register("email", { required: true })} 
+                defaultValue=""  {...register("username", { required: true })} 
               />
             </div>
             <div className="mt-4">
