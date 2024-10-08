@@ -1,7 +1,7 @@
 'use client'
 //import { Signin } from "@/actions"
 import { Input } from "@/components/ui/input"
-//import useAuthStore from "@/store/auth" 
+import useAuthStore from "@/store/auth" 
 import { useForm, SubmitHandler } from "react-hook-form"
 //import { Login } from '@/components/authen/login';
 
@@ -16,7 +16,7 @@ type User = {
 export const Signin = async (body:User) =>{
    
   try {
-     // const state = useAuthStore()
+     const state = useAuthStore()
 
       const response = await fetch("http://167.71.100.123:3003/api/v1/users/login", { method: 'POST',
           headers: {
@@ -31,11 +31,13 @@ export const Signin = async (body:User) =>{
       //set({ products: data.products, isLoading: false })
       //const userLocalStorage = localStorage.getItem('accessToken');
       //if (userLocalStorage) {
-      console.log(data)
+      // console.log(data)
       if (data.status){
-         // set({ isLoggedIn: true });
+       //  set({ isLoggedIn: true });
        //  state.setAccessToken(data.token)
-       //  state.isLoggedIn = data.status
+         state.isLoggedIn = data.status
+      } else {
+
       }
   }
   catch (err:unknown) {
