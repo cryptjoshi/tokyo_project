@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import useAuthStore from "@/store/auth" 
 import { useForm, SubmitHandler } from "react-hook-form"
 //import { Login } from '@/components/authen/login';
+import { Separator } from "@/components/ui/separator"
 
 type User = {
   username:string
@@ -62,6 +63,10 @@ export default function Login() {
  
   }
 
+  const redirect = ()=>{
+    location.replace("/register")
+}
+
   // const handleLogOut() => {
   //     console.log('logged out')
   //     logout()
@@ -104,6 +109,12 @@ export default function Login() {
             <div className="mt-6">
               <button type="submit" className="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 w-full">
                 Login
+              </button>
+            </div>
+            <Separator className="my-4" />
+            <div className="mt-3">
+            <button onClick={redirect} className="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 w-full">
+                Register
               </button>
             </div>
         </div>
