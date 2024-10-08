@@ -24,13 +24,14 @@ export const Signin = async (body:User) =>{
           'Content-Type': 'application/json',
           //'Authorization': 'Bearer ' +  token
           },
-          body: JSON.stringify({"username":body.username,password:body.password})
+          body: JSON.stringify({"username":body.username,password:body.password,"prefix":"psc"})
         })
       const data = await response.json()
       //set({ isLoggedIn: true });
       //set({ products: data.products, isLoading: false })
       //const userLocalStorage = localStorage.getItem('accessToken');
       //if (userLocalStorage) {
+      console.log(data)
       if (data.status){
          // set({ isLoggedIn: true });
        //  state.setAccessToken(data.token)
