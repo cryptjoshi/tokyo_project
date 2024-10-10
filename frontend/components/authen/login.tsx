@@ -1,4 +1,6 @@
 'use client'
+import React from "react"
+import { useRouter } from 'next/router';
 //import { Signin } from "@/actions"
 import { Input } from "@/components/ui/input"
 import useAuthStore from "@/store/auth" 
@@ -6,11 +8,12 @@ import {User} from "@/store/auth"
 import { useForm, SubmitHandler } from "react-hook-form"
 //import { Login } from '@/components/authen/login';
 import { Separator } from "@/components/ui/separator"
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 //import Router from 'next/router'
 //import { useEffect } from "react"
+import { ToastAction } from "@/components/ui/toast"
 
-
+import { useToast } from "@/hooks/use-toast"
 
  
 
@@ -19,15 +22,32 @@ import { useRouter } from 'next/router';
 
 
 export default function Login() {
+  const router = useRouter();
+  const { Signin, isLoggedIn } = useAuthStore();
  
+// const useStore = <T, F>(
+//   store: (callback: (state: T) => unknown) => unknown,
+//   callback: (state: T) => F
+// ) => {
+//   const result = store(callback) as F;
+//   const [data, setData] = React.useState<F>();
+
+//   React.useEffect(() => {
+//     setData(result);
+//   }, [result]);
+
+//   return data;
+// };
+   
+  const {toast} = useToast()
   const {
     register,
     handleSubmit
   } = useForm<User>()
  
-  const { Signin, isLoggedIn } = useAuthStore();
+  
   //const {login} = useAuthStore()
- // const router = useRouter();
+ 
 
   // useEffect(() => {
   //   // ตรวจสอบสถานะการล็อกอินเพื่อ redirect
@@ -35,42 +55,42 @@ export default function Login() {
   //     router.push('/dashboard');
   //   }
   // }, [state.isLoggedIn]); // ทำงานเมื่อ isLoggedIn เปลี่ยนแปลง
-
-
-  const onSubmit: SubmitHandler<User> = async (data:User) => {
-    await Signin(data); // เรียกใช้ฟังก์ชัน Signin ใน authStore
-    location.replace("/")
-    // if (isLoggedIn) {
-    //   router.push('/dashboard'); // redirect หลัง login สำเร็จ
-    // }
-    //  login(data).then((response)=>{
-    
-    //   if(response.Status){
-    //     document.cookie = "isLoggedIn=true; path=/"; // อัพเดต cookie
-    //     state.accessToken = response.token
-    //     //navigate("dashboard")
-    //    // router.push('/dashboard');
-      
-    //   }else {
-    //     state.isLoggedIn = false
-    //     document.cookie = "isLoggedIn=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;"; // ลบ cookie
-
-    //     }
-
-    //  })
-       //console.log('logged in')
-  //  login(data)
+  //const store = useStore(useAuthStore, (state:AuthStore) => state)
  
+  const onSubmit: SubmitHandler<User> = async (data:User) => {
+    try {
+
+    
+     const response = await Signin(data); // เรียกใช้ฟังก์ชัน Signin ใน authStore
+    
+     
+     if (response) {
+  
+        router.push('/dashboard'); // เปลี่ยนไปที่หน้า dashboard เมื่อเข้าสู่ระบบสำเร็จ
+    } else {
+  
+      toast({
+        variant: "destructive",
+        title: "มีข้อผิดพลาด",
+        description: "เข้าสู่ระบบผิดพลาด!",
+        action: <ToastAction altText="ผิดพลาด">{"ผิดพลาด"}</ToastAction>,
+      })
+    }
+    }
+    catch
+    {}
   }
 
   const redirect = ()=>{
     location.replace("/register")
 }
 
-  // const handleLogOut() => {
-  //     console.log('logged out')
-  //     logout()
-  //     }
+  React.useEffect(() => {
+  if (isLoggedIn) {
+      router.push('/dashboard'); // หากผู้ใช้เข้าสู่ระบบอยู่แล้ว นำทางไปยังหน้า dashboard
+  }
+}, [isLoggedIn, router]);
+
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
