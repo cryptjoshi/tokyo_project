@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, PersistOptions } from 'zustand/middleware';
 //import { useRouter } from 'next/router';
+
 export interface AuthStore {
     isLoggedIn: boolean;
     accessToken: string | null;
@@ -8,6 +9,7 @@ export interface AuthStore {
     refreshToken: string | null;
     Signin: (body: User) => Promise<boolean>;   
     Logout: () => void;
+    setIsLoggedIn: (isLoggedIn: boolean | false) => void;
     setAccessToken: (accessToken: string | null) => void;
     setRefreshToken: (refreshToken: string | null) => void;
     init: () => void;
@@ -21,7 +23,7 @@ export type User = {
 
 const useAuthStore = create<AuthStore>()(
   persist(
-    (set) => ({
+    (set,get) => ({
       isLoggedIn: false,
       accessToken: null,
       accessTokenData: null,
@@ -69,6 +71,10 @@ const useAuthStore = create<AuthStore>()(
        //  router.push("/"); 
         // location.replace("/"); // แนะนำให้ใช้ใน context ที่ปลอดภัย เช่นใน useEffect หรือ handle event
       },
+      setIsLoggedIn:(isLoggedIn:boolean)=>{
+       // const isLoggedData = isLoggedIn || false;
+        set({isLoggedIn})
+      },
       setAccessToken: (accessToken: string | null) => {
         const accessTokenData = accessToken || null;
         set({ accessToken, accessTokenData });
@@ -77,14 +83,15 @@ const useAuthStore = create<AuthStore>()(
       init: () => {
 
         
-       //const { setAccessToken, setRefreshToken } = get();
-        
-        //const accessToken = localStorage.getItem('accessToken'); // ปรับใช้ getItem แทน get
-        //const refreshToken = localStorage.getItem('refreshToken');
-        //console.log(accessToken)
-        //console.log(refreshToken)
-        //setAccessToken(accessToken);
-        //setRefreshToken(refreshToken);
+       const { setAccessToken, setRefreshToken,setIsLoggedIn } = get();
+        const isloggedIn = localStorage.getItem('isLoggedIn')=='true';
+        const accessToken = localStorage.getItem('accessToken'); // ปรับใช้ getItem แทน get
+        const refreshToken = localStorage.getItem('refreshToken');
+        // console.log(accessToken)
+        // console.log(refreshToken)
+        setIsLoggedIn(isloggedIn)
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
       },
       clearTokens: () => {
         set({

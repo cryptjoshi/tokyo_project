@@ -107,9 +107,10 @@ export default function TopNav (){
 
 
     //const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+    //const [isloggedin,setIsLogged] = React.useState(false)
     
-    
-    const { Logout,isLoggedIn } = useAuthStore();
+    const { Logout,init,setAccessToken,isLoggedIn,accessToken } = useAuthStore();
+    console.log(isLoggedIn)
    // console.log(accessToken)
     // handleLogout จะทำการ logout และเปลี่ยนหน้าไปที่ "/"
     const handleLogout = () => {
@@ -117,9 +118,17 @@ export default function TopNav (){
       location.replace('/'); // เปลี่ยนไปยังหน้าแรกหลังจาก logout
     };
   
-  
+    React.useEffect(() => {
+      init(); // เรียกใช้งาน init ทุกครั้งเมื่อ Component โหลด
+   //  const token = localStorage.getItem('accessToken');
+     // setIsLogged(localStorage.getItem('isLoggedIn')=='true')
+     //setIsLoggedIn(localStorage.getItem('isLoggedIn')=='true')
+      if (accessToken) {
+          setAccessToken(accessToken);
+      }
+  }, [init, setAccessToken]);
     
-    return (
+    return isLoggedIn && (
         <nav className="fixed inset-x-0 top-0 z-50 bg-white shadow-sm dark:bg-gray-950/90">
       <div className="w-full max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-14 items-center">
@@ -188,21 +197,15 @@ export default function TopNav (){
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-    {isLoggedIn ? (
+   
           <div className="flex items-center gap-4">
            
             <Button size="sm" onClick={handleLogout}>Logout</Button>
           </div>
-         ) :(
-            <div className="flex items-center gap-4">
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              Login
-            </Button>
-          </div>
-         )
-        }
+        
+    
         </div>
       </div>
     </nav>  
     )
-}
+  }

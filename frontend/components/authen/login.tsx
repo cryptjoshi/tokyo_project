@@ -1,6 +1,6 @@
 'use client'
 import React from "react"
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 //import { Signin } from "@/actions"
 import { Input } from "@/components/ui/input"
 import useAuthStore from "@/store/auth" 

@@ -6,8 +6,8 @@ export function middleware(request: NextRequest) {
 
   // ดึงค่าจาก cookies ที่บันทึกสถานะล็อกอิน
   const isLoggedIn = request.cookies.get('isLoggedIn');
-  
-  if (isLoggedIn?.value=='false') {
+
+  if (!isLoggedIn) {
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
