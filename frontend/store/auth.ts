@@ -21,6 +21,8 @@ export type User = {
     password: string;
 };
 
+const endpoint =   "http://152.42.185.164:4006/api/v1/db/login"// process.env.NEXT_PUBLIC_BACKEND_ENDPOINT +"api/v1/users/login"
+
 const useAuthStore = create<AuthStore>()(
   persist(
     (set,get) => ({
@@ -31,7 +33,7 @@ const useAuthStore = create<AuthStore>()(
       Signin: async (body: User) => {
       //  const router = useRouter()
         try {
-          const response = await fetch("http://167.71.100.123:3003/api/v1/users/login", {
+          const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -41,11 +43,11 @@ const useAuthStore = create<AuthStore>()(
           });
 
           const data = await response.json();
-          console.log(data)
-          if (data.status) {
+          //console.log(data.Status)
+          if (data.Status) {
             set({
               isLoggedIn: true,
-              accessToken: data.token,
+              accessToken: data?.token,
             });
             localStorage.setItem('isLoggedIn', JSON.stringify(true));
             document.cookie = "isLoggedIn=true; path=/";
