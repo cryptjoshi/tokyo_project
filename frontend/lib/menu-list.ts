@@ -45,44 +45,44 @@ import {
         menus: [
           {
             href: "",
-            label: "Posts",
+            label: "Agent",
             icon: SquarePen,
             submenus: [
               {
-                href: "/posts",
-                label: "All Posts"
+                href: "/dashboard/agents",
+                label: "All Agents"
               },
               {
-                href: "/posts/new",
-                label: "New Post"
+                href: "/dashboard/agents/new",
+                label: "New Agent"
               }
             ]
           },
-          {
-            href: "/categories",
-            label: "Categories",
-            icon: Bookmark
-          },
-          {
-            href: "/tags",
-            label: "Tags",
-            icon: Tag
-          }
+          // {
+          //   href: "/dashboard/categories",
+          //   label: "Categories",
+          //   icon: Bookmark
+          // },
+          // {
+          //   href: "/dashboard/tags",
+          //   label: "Tags",
+          //   icon: Tag
+          // }
         ]
       },
       {
         groupLabel: "Settings",
         menus: [
           {
-            href: "/users",
+            href: "/dashboard/users",
             label: "Users",
             icon: Users
           },
-          {
-            href: "/account",
-            label: "Account",
-            icon: Settings
-          }
+          // {
+          //   href: "/dashboard/account",
+          //   label: "Account",
+          //   icon: Settings
+          // }
         ]
       }
     ];

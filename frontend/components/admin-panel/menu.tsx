@@ -29,7 +29,7 @@ export function Menu({ isOpen }: MenuProps) {
 
   const handleLogout = () => {
     Logout();
-    location.replace('/'); // เปลี่ยนไปยังหน้าแรกหลังจาก logout
+    location.replace('/'); 
   };
 
   return (
