@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import AdminPanelLayout from "@/components/admin-panel/admin-panel-layout";
 import { Toaster } from "@/components/ui/toaster"
 import "./globals.css";
 
@@ -37,7 +38,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AdminPanelLayout>{children}</AdminPanelLayout>
         <Toaster />
       </body>
     </html>

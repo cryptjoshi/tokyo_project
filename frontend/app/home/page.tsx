@@ -1,129 +1,127 @@
-"use client";
+// import { Button } from "@/components/ui/button"
+// import Login from "@/components/login"
+import Link from "next/link";
+import Image from "next/image";
+import { PanelsTopLeft } from "lucide-react";
+import { ArrowRightIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+
 import { Button } from "@/components/ui/button";
-import useAuthStore from "@/store/auth";
-import  Image  from "next/image"
-import { RxAvatar,RxBell,RxMagnifyingGlass,RxHome,RxListBullet    } from "react-icons/rx";
-
-export default function Dashboar() {
-  const { Logout } = useAuthStore();
-  return (
-    <>
-       
-        <div className="flex justify-between items-center bg-white p-4 shadow-md">
-          <div className="flex items-center space-x-2">
-       
-            <RxAvatar   className="w-6 h-6 rounded-full" />
-            <span>0.00000000 BTC</span>
+import { ModeToggle } from "@/components/mode-toggle";
+export default function Home() {
+    return (
+        <div className="flex flex-col min-h-screen">
+        <header className="z-[50] sticky top-0 w-full bg-background/95 border-b backdrop-blur-sm dark:bg-black/[0.6] border-border/40">
+          <div className="container h-14 flex items-center">
+            <Link
+              href="/"
+              className="flex justify-start items-center hover:opacity-85 transition-opacity duration-300"
+            >
+              <PanelsTopLeft className="w-6 h-6 mr-3" />
+              <span className="font-bold">shadcn/ui sidebar</span>
+              <span className="sr-only">shadcn/ui sidebar</span>
+            </Link>
+            <nav className="ml-auto flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full w-8 h-8 bg-background"
+                asChild
+              >
+                <Link href="https://github.com/salimi-my/shadcn-ui-sidebar">
+                  <GitHubLogoIcon className="h-[1.2rem] w-[1.2rem]" />
+                </Link>
+              </Button>
+              <ModeToggle />
+            </nav>
           </div>
-          <div className="flex space-x-4">
-            <button>
-              <RxMagnifyingGlass  className="w-6 h-6" />
-            </button>
-            <button>
-              <RxBell 
-                className="w-6 h-6"
+        </header>
+        <main className="min-h-[calc(100vh-57px-97px)] flex-1">
+          <div className="container relative pb-10">
+            <section className="mx-auto flex max-w-[980px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-6">
+              <h1 className="text-center text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
+                Sidebar example built on top of shadcn/ui
+              </h1>
+              <span className="max-w-[750px] text-center text-lg font-light text-foreground">
+                A stunning and functional retractable sidebar for Next.js using
+                shadcn/ui complete with desktop and mobile responsiveness.
+              </span>
+              <div className="flex w-full items-center justify-center space-x-4 py-4 md:pb-6">
+                <Button variant="default" asChild>
+                  <Link href="/dashboard">
+                    Demo
+                    <ArrowRightIcon className="ml-2" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link
+                    href="https://ui.shadcn.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn shadcn/ui
+                  </Link>
+                </Button>
+              </div>
+            </section>
+            <div className="w-full flex justify-center relative">
+              <Image
+                src="/demo-light-min.png"
+                width={1080}
+                height={608}
+                alt="demo"
+                priority
+                className="border rounded-xl shadow-sm dark:hidden"
               />
-            </button>
+              <Image
+                src="/demo-dark-min.png"
+                width={1080}
+                height={608}
+                alt="demo-dark"
+                priority
+                className="border border-zinc-600 rounded-xl shadow-sm hidden dark:block dark:shadow-gray-500/5"
+              />
+              <Image
+                src="/demo-mobile-light-min.png"
+                width={228}
+                height={494}
+                alt="demo-mobile"
+                className="border rounded-xl absolute bottom-0 right-0 hidden lg:block dark:hidden"
+              />
+              <Image
+                src="/demo-mobile-dark-min.png"
+                width={228}
+                height={494}
+                alt="demo-mobile"
+                className="border border-zinc-600 rounded-xl absolute bottom-0 right-0 hidden dark:lg:block"
+              />
+            </div>
           </div>
-        </div>
-
-        <div className="p-4 bg-white shadow-md">
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold">0.00000000 BTC</h2>
-            <p className="text-sm text-gray-500">~$0.00</p>
+        </main>
+        <footer className="py-6 md:py-0 border-t border-border/40">
+          <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
+            <p className="text-balance text-center text-sm leading-loose text-muted-foreground">
+              Built on top of{" "}
+              <Link
+                href="https://ui.shadcn.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium underline underline-offset-4"
+              >
+                shadcn/ui
+              </Link>
+              . The source code is available on{" "}
+              <Link
+                href="https://github.com/salimi-my/shadcn-ui-sidebar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium underline underline-offset-4"
+              >
+                GitHub
+              </Link>
+              .
+            </p>
           </div>
-          <div className="flex justify-center mt-4 space-x-4">
-            <Button size={"lg"} className="bg-yellow-400 text-white px-4 py-2 rounded-md w-full">
-              ฝาก
-            </Button>
-            <Button size={"lg"} className="bg-black text-white px-4 py-2 rounded-md w-full">
-              ซื้อ
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-4 p-4 bg-white shadow-md mt-4">
-          <div className="text-center">
-            <Button className="bg-red-500 text-white px-2 py-1 rounded">
-              HOT
-            </Button>
-            <p className="mt-2">6th Anniversary</p>
-          </div>
-          <div className="text-center">
-            <Image
-              src=""
-              alt="Copy Trading"
-              className="w-10 h-10 mx-auto"
-            />
-            <p className="mt-2">Copy Trading</p>
-          </div>
-          <div className="text-center">
-            <Image src="" alt="Spot" className="w-10 h-10 mx-auto" />
-            <p className="mt-2">Spot</p>
-          </div>
-          <div className="text-center">
-            <Image
-              src=""
-              alt="Futures Grid"
-              className="w-10 h-10 mx-auto"
-            />
-            <p className="mt-2">Futures Grid</p>
-          </div>
-        </div>
-
-        <div className="p-4 mt-4">
-          <Image
-            src=""
-            alt="Promo Banner"
-            className="w-full rounded-md"
-          />
-        </div>
-
-        <div className="grid grid-cols-3 gap-4 p-4 bg-white shadow-md mt-4">
-          <div className="text-center">
-            <p className="text-lg font-bold">7D ROI</p>
-            <p className="text-green-500 font-semibold">+203.99%</p>
-          </div>
-          <div className="text-center">
-            <p className="text-lg font-bold">7D ROI</p>
-            <p className="text-green-500 font-semibold">+101.79%</p>
-          </div>
-          <div className="text-center">
-            <p className="text-lg font-bold">7D ROI</p>
-            <p className="text-green-500 font-semibold">+57.17%</p>
-          </div>
-        </div>
-
-        <div className="fixed bottom-0 left-0 right-0 bg-white shadow-md flex justify-around p-4">
-          <Button size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10">
-            <RxHome className="w-6 h-6" />
-            <span className="text-sm">Home</span>
-          </Button>
-          <Button  size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10">
-            <RxListBullet  className="w-6 h-6" />
-            <span className="text-sm">Market</span>
-          </Button>
-          <Button size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10">
-            <Image src="" alt="Buy/Sell" className="w-6 h-6" />
-            <span className="text-sm">ซื้อขาย</span>
-          </Button>
-          <Button size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10">
-            <Image src="" alt="Futures" className="w-6 h-6" />
-            <span className="text-sm">ฟิวเจอร์ส</span>
-          </Button>
-          <Button size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10">
-            <Image src="" alt="Assets" className="w-6 h-6" />
-            <span className="text-sm">ทรัพย์สิน</span>
-          </Button>
-          <Button size={"icon"} variant={"ghost"} className="flex flex-col items-center w-10 h-10"
-            onClick={() => {
-              Logout();
-            }}
-          >
-            Logout
-          </Button>
-        </div>
-       
-    </>
-  );
-}
+        </footer>
+      </div>
+            );
+        }
