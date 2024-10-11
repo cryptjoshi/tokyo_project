@@ -15,6 +15,8 @@ import {
   TooltipContent,
   TooltipProvider
 } from "@/components/ui/tooltip";
+import useAuthStore  from "@/store/auth";
+
 
 interface MenuProps {
   isOpen: boolean | undefined;
@@ -23,6 +25,12 @@ interface MenuProps {
 export function Menu({ isOpen }: MenuProps) {
   const pathname = usePathname();
   const menuList = getMenuList(pathname);
+  const {Logout} = useAuthStore()
+
+  const handleLogout = () => {
+    Logout();
+    location.replace('/'); // เปลี่ยนไปยังหน้าแรกหลังจาก logout
+  };
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -118,7 +126,7 @@ export function Menu({ isOpen }: MenuProps) {
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
+                    onClick={handleLogout}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"
                   >
@@ -136,7 +144,7 @@ export function Menu({ isOpen }: MenuProps) {
                   </Button>
                 </TooltipTrigger>
                 {isOpen === false && (
-                  <TooltipContent side="right">Sign out</TooltipContent>
+                  <TooltipContent side="right" >Sign out</TooltipContent>
                 )}
               </Tooltip>
             </TooltipProvider>

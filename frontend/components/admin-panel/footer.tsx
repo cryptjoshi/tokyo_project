@@ -7,14 +7,14 @@ export function Footer() {
         <p className="text-xs md:text-sm leading-loose text-muted-foreground text-left">
           Built on top of{" "}
           <Link
-            href="https://ui.shadcn.com"
+            href="https://dclab.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="font-medium underline underline-offset-4"
           >
-            shadcn/ui
+            shadcn/ui by dclab dev
           </Link>
-          . The source code is available on{" "}
+          {/* . The source code is available on{" "}
           <Link
             href="https://github.com/salimi-my/shadcn-ui-sidebar"
             target="_blank"
@@ -22,7 +22,7 @@ export function Footer() {
             className="font-medium underline underline-offset-4"
           >
             GitHub
-          </Link>
+          </Link> */}
           .
         </p>
       </div>
