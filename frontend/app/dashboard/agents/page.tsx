@@ -10,10 +10,26 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
-
-export default function NewPostPage() {
+import { Payment, columns } from "@/app/dashboard/agents/colums"
+import { DataTable, DataTableDemo } from "./data-table"
+ 
+async function getData(): Promise<Payment[]> {
+  // Fetch data from your API here.
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    // ...
+  ]
+}
+ 
+export default async function PostsPage() {
+  const data = await getData()
   return (
-    <ContentLayout title="New Post">
+    <ContentLayout title="All Agents">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -29,17 +45,11 @@ export default function NewPostPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href="/posts">Posts</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>New</BreadcrumbPage>
+            <BreadcrumbPage>Agents</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <PlaceholderContent />
+      <DataTableDemo columns={columns} data={data} />
     </ContentLayout>
   );
 }
